@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Weather API</title>
@@ -78,15 +78,30 @@
     </style>
 </head>
 <body>
-    <h1>Weather API</h1>
+<h1>Weather API</h1>
 
-    <form>
-        <label>Enter a location</label>
-        <input type = "text" name = "location">
+<form action = "/weather" method = "post">
+    <label>Enter a location</label>
+    <input type = "text" name = "location">
 
-        <button type = "submit">Submit</button>
-    </form>
+    <button type = "submit">Submit</button>
+</form>
 
-    <div id = "result" style = "display: none; margin-bottom: 2rem; font-weight: bold;"></div>
+<div th:if="${weatherData != null}">
+    <h2>Weather for <span th:text="${weatherData.location}"></span> on <span th:text="${weatherData.date}"></span></h2>
+
+    <p><strong>Conditions:</strong> <span th:text="${weatherData.conditions}"></span> — <span th:text="${weatherData.description}"></span></p>
+
+    <p><strong>Temperature:</strong> <span th:text="${weatherData.temp}"></span>°C
+        (High: <span th:text="${weatherData.tempMax}"></span>°C, Low: <span th:text="${weatherData.tempMin}"></span>°C, Feels like: <span th:text="${weatherData.feelsLike}"></span>°C)
+    </p>
+
+    <p><strong>Humidity:</strong> <span th:text="${weatherData.humidity}"></span>%</p>
+    <p><strong>Precipitation:</strong> <span th:text="${weatherData.precipitation}"></span> mm</p>
+    <p><strong>Wind Speed:</strong> <span th:text="${weatherData.windSpeed}"></span> km/h</p>
+    <p><strong>Sunrise:</strong> <span th:text="${weatherData.sunrise}"></span> |
+        <strong>Sunset:</strong> <span th:text="${weatherData.sunset}"></span>
+    </p>
+</div>
 </body>
 </html>
